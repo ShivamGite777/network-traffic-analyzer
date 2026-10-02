@@ -1,0 +1,19 @@
+venv/
+__pycache__/
+*.pyc
+
+# PyInstaller
+agent/build/
+agent/dist/
+agent/*.spec
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Local generated data
+traffic.csv
+alerts.csv
+
+# Environment files
+.env
