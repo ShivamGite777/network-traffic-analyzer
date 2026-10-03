@@ -48,6 +48,9 @@ CSV_FILE = os.path.join(
 
 )
 
+# Agent authentication token (set this in Render Environment Variables)
+AGENT_TOKEN = os.getenv("AGENT_TOKEN")
+
 
 
 
@@ -740,6 +743,16 @@ def home():
 
 
 
+    })
+# =======================================
+# Health Check API
+# =======================================
+
+@app.route("/api/health", methods=["GET"])
+def health():
+    return jsonify({
+        "status": "ok",
+        "message": "Backend is healthy"
     })
 
 
@@ -1843,6 +1856,18 @@ def receive_agent_packets():
     global agent_packets
 
     global agent_active
+
+
+
+    request_token = request.headers.get("X-Agent-Token")
+
+
+
+    if not AGENT_TOKEN or request_token != AGENT_TOKEN:
+        return jsonify({
+            "status": "error",
+            "message": "Unauthorized agent"
+        }), 401
 
 
 
